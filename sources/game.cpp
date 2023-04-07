@@ -6,13 +6,9 @@
 
     // Game::Game() {}
 
-     Game::Game(Player& player1, Player& player2)  // check about 2 identicle names.
+     Game::Game(Player& player1, Player& player2) 
      : p1(player1), p2(player2) 
      {
-        if (&p1 == &p2)
-        {
-            throw invalid_argument("There most be 2 diffrence Players!");
-        }
         keep_play = true;
         draw_rounds = 0;
         draw_points_counter = 0;
@@ -24,11 +20,13 @@
      void Game::playTurn() // add exception
      {
         if(keep_play == false) 
-            return;
+            throw runtime_error("Can't play more turn!");
 
      // Check that p1 & p2 are 2 difference player.
-        // if (p1. p2)
-            // throw runtime_error("Can't play with 1 Player only!");
+        if (&p1 == &p2)
+        {
+            throw invalid_argument("There most be 2 diffrence Players!");
+        }
         
         Card p1_card = p1.playTurn();
         Card p2_card = p2.playTurn();
@@ -40,6 +38,22 @@
         else if (  ( (p1.stacksize() == 0) || (p1.stacksize() == 1) ) && (p1_card.getRank() == p2_card.getRank()) ) 
         {
             // Draw in the end of the game --> finish the game.
+
+            // Split the rest of the points between the Players.
+            if (p1.stacksize() == 1 )
+            {
+                 p1.setPoints(1);
+                 p2.setPoints(1);
+                 p1.setPoints(1);
+                 p2.setPoints(1);
+            }
+            else
+            {
+                p1.setPoints(1);
+                p2.setPoints(1); 
+            }
+            
+            
             draw_rounds++;
             keep_play = false;
             return;
@@ -208,7 +222,7 @@
 
     void Game::updadePoints(Card c_1, Card c_2) // add the ACE case.
     {
-        int points = 1;
+        int points = 2;
         if (draw_points_counter != 0)
         {
             points = draw_points_counter;
