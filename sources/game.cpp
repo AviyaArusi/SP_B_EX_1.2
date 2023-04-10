@@ -17,12 +17,13 @@
         deal_pack();
      }
 
-     void Game::playTurn() // add exception
+     void Game::playTurn() 
      {
+        // Throw exception if trying to play after the end of the game.
         if(keep_play == false) 
             throw runtime_error("Can't play more turn!");
 
-     // Check that p1 & p2 are 2 difference player.
+        // Check that p1 & p2 are 2 difference player.
         if (&p1 == &p2)
         {
             throw invalid_argument("There most be 2 diffrence Players!");
@@ -35,9 +36,10 @@
             // The last turn.
             keep_play = false;
         }
-        else if (  ( (p1.stacksize() == 0) || (p1.stacksize() == 1) ) && (p1_card.getRank() == p2_card.getRank()) ) 
+        else if (  ( (p1.stacksize() == 0) || (p1.stacksize() == 1) ) && 
+                                (p1_card.getRank() == p2_card.getRank()) ) 
         {
-            // Draw in the end of the game --> finish the game.
+            // Draw in the end of the game --> split the rest of the card and finish the game.
 
             // Split the rest of the points between the Players.
             if (p1.stacksize() == 1 )
@@ -63,7 +65,7 @@
         {
             draw_rounds++;
 
-            if (draw_points_counter == 0) // if this is single draw.
+            if (draw_points_counter == 0) // if this is the first draw.
             {
                 draw_points_counter += 3;
             }
@@ -128,6 +130,7 @@
                 "The number of draw game is --> "  << draw_rounds << endl;
 
      }
+
      void Game::printLastTurn() const // add exception! ** only turn that somebody win! **
      {
         size_t last_index = log.size()-1;
@@ -225,7 +228,7 @@
         int points = 2;
         if (draw_points_counter != 0)
         {
-            points = draw_points_counter;
+            points = 2*draw_points_counter;
             draw_points_counter = 0;
         }
         
