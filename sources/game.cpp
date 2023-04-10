@@ -44,10 +44,12 @@
             // Split the rest of the points between the Players.
             if (p1.stacksize() == 1 )
             {
-                 p1.setPoints(1);
-                 p2.setPoints(1);
-                 p1.setPoints(1);
-                 p2.setPoints(1);
+                p1.playTurn();
+                p2.playTurn();
+                p1.setPoints(1);
+                p2.setPoints(1);
+                p1.setPoints(1);
+                p2.setPoints(1);
             }
             else
             {
