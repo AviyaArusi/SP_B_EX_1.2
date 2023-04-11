@@ -46,13 +46,31 @@
             {
                 p1.playTurn();
                 p2.playTurn();
-                p1.setPoints(draw_points_counter+2, false);
-                p2.setPoints(draw_points_counter+2, false);
+                if (draw_points_counter == 0)
+                {
+                    p1.setPoints(2, false);
+                    p2.setPoints(2, false);
+                }
+                else
+                {
+                    p1.setPoints(draw_points_counter+1, false);
+                    p2.setPoints(draw_points_counter+1, false);
+                }
+               
             }
+
             else
             {
-                p1.setPoints(draw_points_counter+1, false);
-                p2.setPoints(draw_points_counter+1, false); 
+                if (draw_points_counter == 0)
+                {
+                    p1.setPoints(1, false);
+                    p2.setPoints(1, false);
+                }
+                else
+                {
+                    p1.setPoints(draw_points_counter, false);
+                    p2.setPoints(draw_points_counter, false);
+                }
             }
             
             draw_rounds++;
