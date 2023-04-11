@@ -28,15 +28,16 @@ namespace ariel{
         card_pack.push_back(card);
     }
 
-    void Player::setPoints(int add)
+    void Player::setPoints(int add, bool is_win)
     {
-        cards_won += 1;
+        if(is_win)
+            cards_won += 1;
         points += add;
     }
 
     Card Player::playTurn()
     {
-        if(card_pack.size() <= 0) // Check what hepennd if 0 < ??
+        if(card_pack.size() <= 0) 
         {
             throw runtime_error("There is nothing to play!");
         }

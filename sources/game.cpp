@@ -46,17 +46,14 @@
             {
                 p1.playTurn();
                 p2.playTurn();
-                p1.setPoints(1);
-                p2.setPoints(1);
-                p1.setPoints(1);
-                p2.setPoints(1);
+                p1.setPoints(draw_points_counter+2, false);
+                p2.setPoints(draw_points_counter+2, false);
             }
             else
             {
-                p1.setPoints(1);
-                p2.setPoints(1); 
+                p1.setPoints(draw_points_counter+1, false);
+                p2.setPoints(draw_points_counter+1, false); 
             }
-            
             
             draw_rounds++;
             keep_play = false;
@@ -144,9 +141,9 @@
 
      void Game::reset_pack()
      {
-         for (int rank = 1; rank < 14; ++rank)
+         for (int rank = 2; rank < 15; ++rank)
          {
-             for (int type = 14; type < 18 ; ++type)
+             for (int type = 15; type < 19 ; ++type)
              {
                 card_pack.push_back(Card(rank, type));
              }
@@ -185,7 +182,7 @@
     {
         switch(input) 
         {
-        case 1:
+        case 14:
             return "ACE";
         case 2:
             return "TWO";
@@ -211,13 +208,13 @@
             return "QUEEN";
          case 13:
             return "KING";
-        case 14:
-            return "HEARTS";
         case 15:
+            return "HEARTS";
+        case 16:
             return "DIAMONDS";
-         case 16:
+         case 17:
             return "CLUBS";
-        case 17:
+        case 18:
             return "SPADES";
         default:
             // handle invalid input
@@ -233,14 +230,21 @@
             points = 2*draw_points_counter;
             draw_points_counter = 0;
         }
-        
-          if( c_1.getRank() > c_2.getRank() )
+         if (c_1.getRank() == 2 && c_2.getRank() == 14) // The TWO > ACE case. 
         {
-            p1.setPoints(points);
+            p1.setPoints(points, true);
+        }
+        else if (c_1.getRank() == 14 && c_2.getRank() == 2) // The TWO > ACE case. 
+        {
+            p2.setPoints(points, true);
+        }
+        else if( c_1.getRank() > c_2.getRank() )
+        {
+            p1.setPoints(points, true);
         }
         else if (c_1.getRank() < c_2.getRank())
         {
-            p2.setPoints(points);
+            p2.setPoints(points, true);
         }
     }
 

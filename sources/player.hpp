@@ -25,7 +25,7 @@ namespace ariel{
 
         //*****
         void addCard(Card);
-        void setPoints(int);
+        void setPoints(int, bool);
         Card playTurn();
         string getName() const;
         int getCardsWon() const;
