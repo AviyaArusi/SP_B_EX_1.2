@@ -13,23 +13,21 @@ namespace ariel{
     class Player {
     private:
         string name;
-        int points;
-        int cards_won;
-        vector <Card> card_pack;
+        int points; // Holds the number of points the Player gets in the game.
+        int cards_won; // Hold the number of cards that win.
+        vector <Card> card_pack; // The player pack.
 
     public:
-        Player();
         Player(string);
         int stacksize() const;
         int cardesTaken()const;
 
-        //*****
+        // Added function
         void addCard(Card);
         void setPoints(int, bool);
         Card playTurn();
         string getName() const;
         int getCardsWon() const;
-        // void shuffle_pack();
     };
 }
 #endif //EX_1_PLAYER_H

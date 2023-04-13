@@ -13,7 +13,6 @@ namespace ariel{
         int rank;
         int type;
     public:
-        Card();
         Card(int, int);
         int getRank() const;
         int getType() const;

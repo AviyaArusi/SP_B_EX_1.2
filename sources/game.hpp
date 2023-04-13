@@ -2,11 +2,11 @@
 #define EX_1_GAME_H
 
 #include <vector>
-#include <utility>
+// #include <utility> ???????????????????????????????????
+// #include <stdexcept> // For the exception. ??????????????????????????????
 #include <string>
 #include <iostream>
 #include <cstdlib> // For the random number.
-#include <stdexcept> // For the exception.
 #include "player.hpp"
 #include "card.hpp"
 
@@ -15,26 +15,25 @@ namespace ariel{
 
     class Game{
     private:
-        Player& p1;
-        Player& p2;                 // The 2 player of the game.
-        vector<pair<Card, Card>> log; // All the turn one after another.
+        Player& p1; // The 2 player of the game.
+        Player& p2;                 
+        vector<pair<Card, Card>> log; // Hold all the non-draw turn one after another.
         vector<Card> card_pack;      // Hold the full pack in the start of the Game.
         bool keep_play;
-        int draw_rounds;
-        int draw_points_counter;
+        int draw_rounds; // Hold the number of draw rounds in all the game.
+        int draw_points_counter; // Hold the cuurent draw points.
+   
     public:
-        // Constructor's
-        Game();
         Game(Player&, Player&);
 
         void playTurn();
-        void printLastTurn() const;
         void playAll();
+        void printLastTurn() const;
         void printWiner() const;
         void printLog() const;
         void printStats() const;
 
-        //***
+        // Added function
         void reset_pack();
         void shuffle_pack();
         void deal_pack();

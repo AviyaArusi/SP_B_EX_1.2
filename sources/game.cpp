@@ -4,7 +4,6 @@
 
  namespace ariel {
 
-    // Game::Game() {}
 
      Game::Game(Player& player1, Player& player2) 
      : p1(player1), p2(player2) 
@@ -12,8 +11,8 @@
         keep_play = true;
         draw_rounds = 0;
         draw_points_counter = 0;
-        reset_pack();
-        shuffle_pack();
+        reset_pack(); 
+        shuffle_pack(); 
         deal_pack();
      }
 
@@ -23,7 +22,7 @@
         if(keep_play == false) 
             throw runtime_error("Can't play more turn!");
 
-        // Check that p1 & p2 are 2 difference player.
+        // Check that p1 & p2 are 2 difference players.
         if (&p1 == &p2)
         {
             throw invalid_argument("There most be 2 diffrence Players!");
@@ -31,6 +30,7 @@
         
         Card p1_card = p1.playTurn();
         Card p2_card = p2.playTurn();
+
         if ( (p1.stacksize() == 0) && (p1_card.getRank() != p2_card.getRank()) )
         {
             // The last turn.
@@ -40,44 +40,53 @@
                                 (p1_card.getRank() == p2_card.getRank()) ) 
         {
             // Draw in the end of the game --> split the rest of the card and finish the game.
-
             // Split the rest of the points between the Players.
+
+            // If we have 1 more card in the pack.
             if (p1.stacksize() == 1 )
             {
+                // Pull the last card.
                 p1.playTurn();
                 p2.playTurn();
                 if (draw_points_counter == 0)
                 {
+                    // If this is a single draw.
                     p1.setPoints(2, false);
                     p2.setPoints(2, false);
                 }
                 else
                 {
+                    // If we had a draw before.
                     p1.setPoints(draw_points_counter+1, false);
                     p2.setPoints(draw_points_counter+1, false);
                 }
                
             }
 
+            // If this is the last card in the pack.
             else
             {
                 if (draw_points_counter == 0)
                 {
+                    // If this is a single draw.
                     p1.setPoints(1, false);
                     p2.setPoints(1, false);
                 }
+
                 else
                 {
+                    // If we had a draw before.
                     p1.setPoints(draw_points_counter, false);
                     p2.setPoints(draw_points_counter, false);
                 }
             }
             
-            draw_rounds++;
-            keep_play = false;
+            draw_rounds++; 
+            keep_play = false; // make this turn the last.
             return;
         }
         
+        // If this is a draw.
         if(p1_card.getRank() == p2_card.getRank())
         {
             draw_rounds++;
@@ -86,17 +95,18 @@
             {
                 draw_points_counter += 3;
             }
-            else // If this is multiple draw.
+            else // If we had draw before.
             {
                 draw_points_counter += 2;
             }
-            // Pull another 2 Cards with the face down and play the next game.
+            // Pull another 1 Cards for each Player with the face down and play the next turn.
             p1.playTurn();
             p2.playTurn();
-            playTurn(); // the next game.
+            playTurn(); // the next turn.
             return;
         }
 
+        // If we get here we have a winner in the round.
         updadePoints(p1_card, p2_card);
         pair<Card, Card> cardPair(p1_card, p2_card);
         log.push_back(cardPair);
@@ -174,7 +184,7 @@
          for (int i = 0; i < 100; ++i) {
              int r = rand() % 52;
              int l = rand() % 52;
-             // make swap between the indexes.
+             // make swap between the 2 random indexs.
              Card temp = card_pack[size_t(r)];
              card_pack[size_t(r)] = card_pack[size_t(l)];
              card_pack[size_t(l)] = temp;
@@ -242,12 +252,15 @@
 
     void Game::updadePoints(Card c_1, Card c_2) // add the ACE case.
     {
-        int points = 2;
+        int points = 2; // One point for every card.
+
+        // If this is a win after a draw update the points to add.
         if (draw_points_counter != 0)
         {
             points = 2*draw_points_counter;
             draw_points_counter = 0;
         }
+        
          if (c_1.getRank() == 2 && c_2.getRank() == 14) // The TWO > ACE case. 
         {
             p1.setPoints(points, true);

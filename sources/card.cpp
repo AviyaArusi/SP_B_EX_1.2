@@ -2,7 +2,6 @@
 
 namespace ariel{
 
-    Card::Card() {}
     Card::Card(int rank, int type )
     {
         this->rank = rank;
